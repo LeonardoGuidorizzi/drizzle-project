@@ -5,8 +5,7 @@ const db = drizzle(process.env.DATABASE_URL!); // onde guarda toda a magia
 
 async function main() {
   const user: typeof usersTable.$inferSelect = {
-    //-->inferSelect é a melhor opção pq  ele campos gerados pelo banco como o id
-    id: 0,
+    id: 0, //-->inferSelect é a melhor opção pq  ele campos gerados pelo banco como o id
     name: "Leonardo", //----> a magia
     age: 22,
     email: "Y7Gd0@example.com",
