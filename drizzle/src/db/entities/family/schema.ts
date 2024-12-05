@@ -1,8 +1,11 @@
+import { relations } from "drizzle-orm";
 import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { usersTable } from "../user/schema";
 
 export const familyTable = pgTable("family", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   familyName: varchar({ length: 225 }).notNull(),
+  userId: integer("userId").references(() => usersTable.id),
 });
 /**
  * In the drizzle.config.ts file, you need to specify the path to your schema folder. 
@@ -17,3 +20,9 @@ export default defineConfig({
   schema: './src/db/schema'
 })
  */
+export const familyRelations = relations(familyTable, ({ one }) => ({
+  author: one(usersTable, {
+    fields: [familyTable.userId],
+    references: [usersTable.id],
+  }),
+}));
